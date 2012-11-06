@@ -12,8 +12,8 @@ public class ArrayAlgorithms {
 	 * @param a Массив.
 	 * @return Первый элемент массива.
 	 */
-	static int getFirst(int[] a) {
-		return a[0];
+	public static int getFirst(int[] array) {
+		return array[0];
 	}
 	
 	/**
@@ -23,8 +23,8 @@ public class ArrayAlgorithms {
 	 * @param a Массив.
 	 * @return Последний элемент массива.
 	 */
-	static int getLast(int[] a) {
-		return a[a.length - 1];
+	public static int getLast(int[] array) {
+		return array[array.length - 1];
 	}
 	
 	/**
@@ -32,16 +32,16 @@ public class ArrayAlgorithms {
 	 * @param a Массив.
 	 * @return Длина массива.
 	 */
-	static int getLength(int[] a) {
-		return a.length;
+	public static int getLength(int[] array) {
+		return array.length;
 	}
 
 	/**
 	 * Печать всех элементов массива в одну строку.
 	 * @param a Печатаемый массив.
 	 */
-	static void print(int[] a) {
-		for (int e : a) {
+	public static void print(int[] array) {
+		for (int e : array) {
 			System.out.print(e + " ");
 		}
 		System.out.println();
@@ -51,9 +51,9 @@ public class ArrayAlgorithms {
 	 * Печать элементов массива в обратном порядке
 	 * @param a Печатаемый массив.
 	 */
-	static void printReverced(int[] a) {
-		for (int i=a.length-1; i>=0; i--) {
-			System.out.print(a[i] + " ");
+	public static void printReverced(int[] array) {
+		for (int i = array.length - 1; i >= 0; i--) {
+			System.out.print(array[i] + " ");
 		}
 		System.out.println();
 	}
@@ -63,12 +63,12 @@ public class ArrayAlgorithms {
 	 * @param len Длина.
 	 * @return Сгенерированный массив.
 	 */
-	static int[] randomArray(int len) {
+	public static int[] randomArray(int len) {
 		Random random = new Random();
 		int[] a = new int[len];
 		// Заполняем массив случайными значениями из интервала 0..(5*len - 1)
-		for (int i = 0; i < len; ++i) {
-			a[i] = random.nextInt(5*len);
+		for (int i = 0; i < len; i++) {
+			a[i] = random.nextInt(5 * len);
 		}
 		return a;
 	}
@@ -79,9 +79,9 @@ public class ArrayAlgorithms {
 	 * @param a Массив, в котором ищем максимум.
 	 * @return Максимальный элемент (непустого) массива.
 	 */
-	static int getMax(int[] a) {
+	public static int getMax(int[] array) {
 		int max = Integer.MIN_VALUE;
-		for (int e : a) {
+		for (int e : array) {
 			if (e > max){
 				max = e;
 			}
@@ -95,17 +95,11 @@ public class ArrayAlgorithms {
 	 * @param a2 Второй массив.
 	 * @return Результат сравнения.
 	 */
-	static boolean equals(int[] a1, int[] a2) {
-		if (a1 == null){
-			return a2 == null;
-		}
-		if (a2 == null){
+	public static boolean equals(int[] a1, int[] a2) {
+		if ((a1 == null) || (a2 == null) || (a1.length != a2.length)) {
 			return false;
 		}
-		if (a1.length != a2.length){
-			return false;
-		}
-		for (int i = 0; i < a1.length; ++i) {
+		for (int i = 0; i < a1.length; i++) {
 			if (a1[i] != a2[i]){
 				return false;
 			}
@@ -121,9 +115,9 @@ public class ArrayAlgorithms {
 	 * @return Индекс найденного элемента или -1,
 	 *     если элемент не найден.
 	 */
-	static int indexOf(int[] a, int key) {
-		for (int i = 0; i < a.length; ++i) {
-			if (a[i] == key) {
+	public static int indexOf(int[] array, int key) {
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] == key) {
 				return i;
 			}
 		}
@@ -135,12 +129,14 @@ public class ArrayAlgorithms {
 	 * @param array Исходный массив.
 	 * @return Длина максимальной возрастающей  подпоследовательности.
 	 */
-	static int subsequence(int[] array) {
-		if(array.length == 0) return 0;
+	public static int subsequence(int[] array) {
+		if(array.length == 0){
+			return 0;
+		}
 		int lenMax = 1;		
 		int lenCurrent = 1;
 		int current = array[0];
-		for (int i = 1; i < array.length; ++i) {
+		for (int i = 1; i < array.length; i++) {
 			if (array[i] >= current) {
 				if (++lenCurrent > lenMax) {
 					lenMax = lenCurrent;
@@ -151,6 +147,33 @@ public class ArrayAlgorithms {
 			current = array[i];
 		}
 		return lenMax;
+	}
+	
+	/**
+	 * Перестановка i-го и j-го элементов массива местами
+	 * @param array Массив, в котором осуществляется перестановка
+	 * @param i     Индекс первого элемента участвующего в перестановке 
+	 * @param j     Индекс второго элемента участвующего в перестановке 
+	 */
+	public static void swap(int[] array, int i, int j) {
+		int temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
+	}
+	
+	/**
+	 * Метод проверяет, отсортирован ли массив по возрастанию
+	 * @param array массив
+	 * @return true, если массив отсортирован по возрастанию
+	 * false - в противном случае
+	 */
+	public static boolean isSorted(int[] array){
+		for (int i = 1; i < array.length; i++){
+			if(array[i - 1] > array[i]){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static void main(String[] args) {
