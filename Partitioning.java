@@ -9,7 +9,7 @@ public class Partitioning {
 	/**
 	 * Фильтрация массива относительно заданного элемента
 	 * @see <a href="http://goo.gl/PELZV">Описание алгоритма</a>
-	 * @param array  Массив в котором осцществляется фильтрация относительно случайного элемента
+	 * @param array  Массив в котором осуществляется фильтрация относительно случайного элемента
 	 */
 	public static void partitioning(int[] array) {
 		if ((array == null) || (array.length < 2)) {

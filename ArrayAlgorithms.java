@@ -175,6 +175,32 @@ public class ArrayAlgorithms {
 		}
 		return true;
 	}
+	
+	/**
+	 * Создание копии массива
+	 * @param array исходный массив
+	 * @return новый массив с теми же данными, что и в исходном массиве
+	 */
+	public static int[] copyArray(int[] array) {		
+		return copyArray(array, 0, array.length -1);
+	}
+	
+	/**
+	 * Создание копии массива с индекса start до индекса end включительно
+	 * @param array исходный массив
+	 * @return новый массив размера end - start с данными, 
+	 * стоящими в исходном массиве с индекса start до индекса end включительно
+	 */
+	public static int[] copyArray(int[] array, int start, int end) {
+		if ((array == null) || (start > end)) {
+			return null;
+		}		
+		int[] result = new int[end - start + 1];
+		for (int i = start; i <= end; i++) {
+			result[i - start] = array[i]; 
+		}
+		return result;
+	}
 
 	public static void main(String[] args) {
 		// Генерируем массив длины 15
