@@ -1,19 +1,6 @@
 import java.util.Date;
 
 public class Printf {
-	/*
-Float, Double.
-
-%f → Десятичное  число с точкой.
-       %e → Десятичное  число с точкой и экспонентой.
-       %.10f → С точностью 10 знаков после запятой.
-       printf("%.10f", Math.PI); //  "3,1415926536"
-Date, Calendar.
-
-%tF → Дата в формате "год-месяц-день".
-printf("%tF", new Date()); //  "2011-01-27"
-%tT → Время в формате "час:минута:секунда".
-printf("%tT", new Date()); //  "22:42:37"*/
 
 	public static void main(String[] args) {
 
