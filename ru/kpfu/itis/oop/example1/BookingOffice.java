@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class BookingOffice {
+	
 	public static void buyTicket(Ticket ticket){
 		Scanner scanner = new Scanner(System.in);
 		System.out.printf("Ticket price: %.2f %n", ticket.getPrice());

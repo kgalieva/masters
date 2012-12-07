@@ -1,5 +1,4 @@
-
-
+package exam.combinations;
 import java.util.Scanner;
 
 public class Subsets {

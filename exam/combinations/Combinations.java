@@ -1,4 +1,4 @@
-package exam;
+package exam.combinations;
 
 public class Combinations {
 	
