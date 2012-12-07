@@ -10,7 +10,7 @@ public class CombinationsSimple {
 	}
 
 	public static void main(String[] args) {
-		int n = 6;
+		int n = 10;
 		int[] a = new int[n];
 		for (int j = 0; j < Math.pow(2, n); j++) {		
 			a[n - 1] = j;
