@@ -63,7 +63,7 @@ public class QueueWithoutCounter implements Queue {
 	
 	@Override
 	public boolean isEmpty() {		
-		return (last + 1 == first || last == first + maxSize - 1);//
+		return (last + 1 == first || last == first + maxSize - 1);
 	}
 	
 	/**

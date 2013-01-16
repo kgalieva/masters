@@ -58,7 +58,7 @@ public class CombinationsK {
 
 	public static void main(String[] args) {
 		int n = 6;
-		int k = 4;
+		int k = 2;
 		int[] indices = new int[k];
 		for (int i = 0; i < k; i++) {
 			indices[i] = i;
