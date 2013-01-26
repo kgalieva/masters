@@ -8,7 +8,7 @@ public class TestMyException {
 		throw new MyException();
 	}
 	
-	public static void g() throws MyException {
+	public static void g() throws MyException{
 		System.out.println("Throwing exception from method g()");
 		//возбуждаем исключение MyException
 		throw new MyException("exception in method g()");
