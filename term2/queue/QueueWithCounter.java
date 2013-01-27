@@ -1,5 +1,7 @@
 package term2.queue;
 
+import java.util.NoSuchElementException;
+
 /**
  * Реализация циклической очереди.
  */
@@ -55,8 +57,14 @@ public class QueueWithCounter implements Queue {
 	 */
 	@Override
 	public Object poll() {
-		// TODO Auto-generated method stub
-		return null;
+		if (isEmpty()) {
+			return null;
+		}
+		Object value = elements[first];
+		elements[first] = null;
+		first = ++first%maxSize;
+		count--;
+		return value;
 	}
 
 	/**
@@ -64,8 +72,7 @@ public class QueueWithCounter implements Queue {
 	 */
 	@Override
 	public Object peek() {
-		// TODO Auto-generated method stub
-		return null;
+		return elements[first];
 	}
 
 	/**
@@ -73,8 +80,7 @@ public class QueueWithCounter implements Queue {
 	 */
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return count;
 	}
 
 	/**
@@ -82,8 +88,7 @@ public class QueueWithCounter implements Queue {
 	 */
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return count == 0;
 	}
 
 	/**
@@ -91,8 +96,25 @@ public class QueueWithCounter implements Queue {
 	 */
 	@Override
 	public boolean isFull() {
-		// TODO Auto-generated method stub
-		return false;
+		return count == maxSize;
 	}
+
+	@Override
+	public boolean add(Object e) {
+		if(offer(e)) {
+			return true;			
+		}
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public Object remove() {
+		Object result;
+		if((result = poll()) != null){
+			return result;
+		}
+		throw new NoSuchElementException();
+	}
+
 
 }

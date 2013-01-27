@@ -1,5 +1,7 @@
 package term2.queue;
 
+import java.util.NoSuchElementException;
+
 /**
  * Релизация очереди на основе односвязного списка аналогично классу LinkedStack
  */
@@ -7,12 +9,27 @@ public class LinkedQueue implements Queue {
 	/**
 	 * В классе LinkedQueue содержатся 3 поля:
 	 * ссылка на первый элемент, ссылка на последний элемент и количество элементов в списке
-	 * А также внутренний класс Node, описывающий элементы списка.
+	 */
+	private Node first;
+	private Node last;
+	private int size;
+	
+	 /** А также внутренний класс Node, описывающий элементы списка.
 	 * В классе Node 2 поля: значение текущего элемента и ссылка на следующий элемент.
+	 * 
 	 * Такой список называют односвязным.
 	 * Сравните с классом LinkedList, в нашей реализации у его элементов были ссылки на следующий и на предыдущий элементы,
 	 * такой список назвают двусвязным.
 	 */
+	private class Node {
+		Node next;
+		Object value;
+		
+		public Node(Object value, Node next) {
+			this.next = next;
+			this.value = value;
+		}
+	}
 	
 	/**
 	 * Метод offer создает новый элемент списка со значением, 
@@ -27,8 +44,15 @@ public class LinkedQueue implements Queue {
 	 */
 	@Override
 	public boolean offer(Object e) {
-		// TODO Auto-generated method stub
-		return false;
+		Node node = new Node(e, null);
+		if (isEmpty()) {
+			first = node;
+		} else {
+			last.next = node;
+		}
+		last = node;
+		size++;
+		return true;
 	}
 
 	/**
@@ -41,32 +65,55 @@ public class LinkedQueue implements Queue {
 	 */
 	@Override
 	public Object poll() {
-		// TODO Auto-generated method stub
-		return null;
+		if(isEmpty()) {
+			return null;
+		}
+		Object value = first.value;
+		Node temp = first;
+		first = first.next;
+		temp.next = null;
+		temp.value = null;
+		if (--size == 0){
+			last = null;
+		}		
+		return value;
 	}
 
 	@Override
-	public Object peek() {
-		// TODO Auto-generated method stub
-		return null;
+	public Object peek() {		
+		return first.value;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return size == 0;
 	}
 
 	@Override
 	public boolean isFull() {
-		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean add(Object e) {
+		if(offer(e)) {
+			return true;			
+		}
+		throw new IllegalStateException();
+	}
+
+	@Override
+	public Object remove() {
+		Object result;
+		if((result = poll()) != null){
+			return result;
+		}
+		throw new NoSuchElementException();
 	}
 
 }
