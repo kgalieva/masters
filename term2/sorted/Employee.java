@@ -4,21 +4,22 @@ import java.math.BigDecimal;
 
 public class Employee implements Comparable{
 	
-	private String lastname;
-	private BigDecimal salary;
+	private String name;
+	private BigDecimal salary;	
 	
-	public Employee(String lastname, BigDecimal salary) {
-		this.lastname = lastname;
+	public Employee(String name, BigDecimal salary) {
+		super();
+		this.name = name;
 		this.salary = salary;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getName() {
+		return name;
 	}
-	
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	} 
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 	public BigDecimal getSalary() {
 		return salary;
@@ -31,12 +32,11 @@ public class Employee implements Comparable{
 	@Override
 	public int compareTo(Object o) {
 		Employee e = (Employee)o;
-		return lastname.compareTo(e.lastname);
+		return name.compareTo(e.name);
 	}
 
 	@Override
 	public String toString() {
-		return "Employee [lastname=" + lastname + ", salary=" + salary + "]";
+		return "Employee [name=" + name + ", salary=" + salary + "]";
 	}	
-	
 }

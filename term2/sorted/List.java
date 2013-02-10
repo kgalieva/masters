@@ -2,8 +2,9 @@ package term2.sorted;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.ListIterator;
 
-public interface List {
+public interface List extends Iterable{
 	/**
 	 * Метод получения значения элемента по индексу
 	 */
@@ -12,7 +13,12 @@ public interface List {
 	/**
 	 * Метод добавления элемента в начало списка
 	 */
-	boolean add(Object o);
+	boolean addFirst(Object o);
+	
+	/**
+	 * Метод добавления элемента в конец списка
+	 */
+	boolean addLast(Object o);
 	
 	/**
 	 * Метод добавления элемента на заданную позицию
@@ -34,14 +40,14 @@ public interface List {
 	boolean addSort(Object o, Comparator c);
 
 	/**
-	 * Метод получения размера списка
-	 */
-	int size();
-
-	/**
 	 * Метод удаления элемента по индексу
 	 */
 	Object remove(int i);
+	
+	/**
+	 * Метод получения размера списка
+	 */
+	int size();
 	
 	/**
 	 * Метод проверки, является ли список пустым
@@ -51,8 +57,7 @@ public interface List {
 	boolean isEmpty();
 	
 	/**
-	 * Возвращает итератор для перебора элементов списка
-	 * @return
+	 * @return ListIterator - итератор, который позволяет перебирать элементы в обе стороны
 	 */
-	Iterator iterator();
+	public ListIterator listIterator(int index);
 }
