@@ -6,14 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TestMaxSubsequence {
-	Map<Integer[], Integer> testCases = new HashMap<>();
+	static Map<Integer[], Integer> testCases = new HashMap<>();
 
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static void setUp() {
 		testCases.put(new Integer[] { 1, -5, 2, -1, 5, 6, 3, -6, 4 }, 15);
 		testCases.put(new Integer[] { 6, -5, 2, -1, 5, 6, 3, -6, 14 }, 24);
 		testCases.put(new Integer[] { 11, -5, 2, -100, 5, 6, 3, -6, 4 }, 14);

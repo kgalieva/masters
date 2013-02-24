@@ -9,13 +9,13 @@ import java.util.NoSuchElementException;
 /**
  * Двусвязный список, где каждый элемент содержит ссылки на предыдущий и следующий элементы. 
  */
-public class DoublyLinkedList implements List {
+public class DoublyLinkedList<T> implements List<T> {
 	
 	//первый элемент списка
-	private Node first;
+	private Node<T> first;
 	 
 	//последний элемент списка
-	private Node last;
+	private Node<T> last;
 	
 	/* количество модификаций списка. Необходимо для отслеживания модификаций
 	 * списка во время перебора итератором.*/
@@ -27,16 +27,16 @@ public class DoublyLinkedList implements List {
 	/**
 	 * Класс элемента списка
 	 */
-	private static class Node {
+	private static class Node<T> {
 		//ссылка на предыдущий элемент списка
-		Node prev;
+		Node<T> prev;
 		//ссылка на следующий элемент списка
-		Node next;
+		Node<T> next;
 		//данные текущего элемента
-		Object data;
+		T data;
 		
-		//конструктор класса Node с тремя параметрами
-		public Node(Node prev, Object data, Node next) {
+		//конструктор класса Node<T> с тремя параметрами
+		public Node(Node<T> prev, T data,Node<T> next) {
 			this.data = data;
 			this.next = next;
 			this.prev = prev;
@@ -47,13 +47,13 @@ public class DoublyLinkedList implements List {
 	 * Итератор, позволяющий перебирать элементы списка в обоих направлениях
 	 * http://docs.oracle.com/javase/7/docs/api/java/util/ListIterator.html
 	 */
-	private class ListItr implements ListIterator {
+	private class ListItr implements ListIterator<T> {
 		/* Последний элемент, который вернул итератор
 		 * Если элемент был удален, то lastReturned = null
 		 */
-		private Node lastReturned = null;
+		private Node<T> lastReturned = null;
 		//следующий элемент, который вернет метод next()
-		private Node next;
+		private Node<T> next;
 		//индекс следующего элемента, который вернет метод next()
 		private int nextIndex;
 		/* Запоминаем количество модификаций списка до начала перебора, 
@@ -81,7 +81,7 @@ public class DoublyLinkedList implements List {
 		 * @throws NoSuchElementException
 		 *             если в текущей итерации перебраны все элементы
 		 */
-		public Object next() {
+		public T next() {
 			// проверяем, не было ли конкурентных модификаций
 			checkForComodification();
 			// если в текущей итерации перебраны все элементы, кидаем исключение
@@ -117,7 +117,7 @@ public class DoublyLinkedList implements List {
 		 * @throws NoSuchElementException
 		 *             если в текущей итерации перебраны все элементы в направлении к началу списка
 		 */
-		public Object previous() {
+		public T previous() {
 			// проверяем, не было ли конкурентных модификаций
 			checkForComodification();
 			// если в текущей итерации перебраны все элементы в направлении к началу списка, кидаем исключение
@@ -169,7 +169,7 @@ public class DoublyLinkedList implements List {
 				throw new IllegalStateException();
 			}
 		
-			Node lastNext = lastReturned.next;
+			Node<T> lastNext = lastReturned.next;
 			//удаляем нужный элемент с помощью метода remove класса DoublyLinkedList
 			DoublyLinkedList.this.remove(lastReturned);
 			
@@ -206,7 +206,7 @@ public class DoublyLinkedList implements List {
 		 * который вернул итератор. Этот метод нельзя вызывать после вызовов методов 
 		 * add() и remove() итератора.
 		 */ 
-		public void set(Object e) {
+		public void set(T e) {
 			if (lastReturned == null)
 				throw new IllegalStateException();
 			checkForComodification();
@@ -217,7 +217,7 @@ public class DoublyLinkedList implements List {
 		 * Добавляет новый элемент перед элементом, который вернет метод next() 
 		 * при следующем вызове, если такой элемент существует. 
 		 */
-		public void add(Object e) {
+		public void add(T e) {
 			checkForComodification();
 			lastReturned = null;
 			DoublyLinkedList.this.add(e, nextIndex);
@@ -241,8 +241,8 @@ public class DoublyLinkedList implements List {
 	/**
 	 * Метод получения значения элемента по индексу
 	 */
-	public Object get(int i) {
-		Node x = getNode(i);
+	public T get(int i) {
+		Node<T> x = getNode(i);
 		return x == null ? null : x.data;
 	}
 
@@ -254,14 +254,14 @@ public class DoublyLinkedList implements List {
 	 * Модификатор доступа private указывает на то, что данный метод доступен только в текущем классе.
 	 * Это вспомогательный метод, мы не хотим, чтобы пользователям он был виден.
 	 */
-	private Node getNode(int i) {
+	private Node<T> getNode(int i) {
 		if (i >= size) {
 			return null;
 		}
 		//если индекс искомого элемента находится в первой половине массива
 		if (i < (size >> 1)) {
 			//ведем перебор с начала списка
-			Node x = first;
+			Node<T> x = first;
 			for (int j = 0; j < i; j++) {
 				//сдвигаемся на следующий элемент списка
 				x = x.next;
@@ -269,7 +269,7 @@ public class DoublyLinkedList implements List {
 			return x;
 		} else {
 			//в противном случае ведем перебор с конца списка
-			Node x = last;
+			Node<T> x = last;
 			for (int j = size - 1; j > i; j--) {
 				//сдвигаемся на предыдущий элемент списка
 				x = x.prev;
@@ -281,8 +281,8 @@ public class DoublyLinkedList implements List {
 	/**
 	 * Метод добавления элемента в начало списка
 	 */
-	public boolean addFirst(Object o) {
-		Node newNode = new Node(null, o, first);
+	public boolean addFirst(T o) {
+		Node<T> newNode = new Node<>(null, o, first);
 		if (first != null) {
 			first.prev = newNode;
 		} else {
@@ -297,14 +297,14 @@ public class DoublyLinkedList implements List {
 	/**
 	 * Метод добавления элемента на заданную позицию
 	 */
-	public boolean add(Object o, int i) {
+	public boolean add(T o, int i) {
 		if (i < 0) {
 			throw new IndexOutOfBoundsException("index = " + i);
 		}
 		if (size == 0 || i == 0) {
 			return addFirst(o);
 		}
-		Node current = first;
+		Node<T> current = first;
 		for (int j = 1; j < i && j < size; j++) {
 			current = current.next;
 		}
@@ -317,8 +317,8 @@ public class DoublyLinkedList implements List {
 	 * @param o Значение нового элемента
 	 * @return true, если вставка прошла успешно
 	 */
-	private boolean addAfter(Node current, Object o) {
-		Node newNode = new Node(current, o, current.next);
+	private boolean addAfter(Node<T> current, T o) {
+		Node<T> newNode = new Node<>(current, o, current.next);
 		if (current.next == null) {
 			last = newNode;
 		}else {
@@ -336,12 +336,13 @@ public class DoublyLinkedList implements List {
 	 * можно было сравнить друг с другом, используя метод compareTo(). В
 	 * противном случае будет брошено исключение ClassCastException.
 	 */
-	public boolean addSort(Object o) {
-		Comparable data = (Comparable) o;
+	@SuppressWarnings("unchecked")
+	public boolean addSort(T o) {
+		Comparable<? super T> data = (Comparable<? super T>) o;
 		if (size == 0 || data.compareTo(first.data) <= 0) {
 			return addFirst(o);
 		}
-		Node current = first;
+		Node<T> current = first;
 		while (current.next != null && data.compareTo(current.next.data) > 0) {
 			current = current.next;
 		}
@@ -352,7 +353,7 @@ public class DoublyLinkedList implements List {
 	 * Метод добавления элемента в порядке заданном в Comparator. Все элементы
 	 * списка должны быть сравнимы друг с другом с помощью Comparator.
 	 */
-	public boolean addSort(Object o, Comparator c) {
+	public boolean addSort(T o, Comparator<? super T> c) {
 		// TODO ДЗ 26
 		return false;
 	}
@@ -360,10 +361,10 @@ public class DoublyLinkedList implements List {
 	/**
 	 * Метод добавления элемента в конец списка
 	 */
-	public boolean addLast(Object o) {
-		Node l = last;
+	public boolean addLast(T o) {
+		Node<T> l = last;
 		//создаем новый элемент
-		Node newNode = new Node(l, o, null);
+		Node<T> newNode = new Node<T>(l, o, null);
 		//добавленный элемент будет последним в списке
 		last = newNode;
 		//проверяем, не был ли список пустым
@@ -383,8 +384,8 @@ public class DoublyLinkedList implements List {
 	/**
 	 * Метод удаления элемента по индексу
 	 */
-	public Object remove(int i) {
-		Node x = getNode(i);
+	public T remove(int i) {
+		Node<T> x = getNode(i);
 		if (x == null) {
 			return null;
 		}
@@ -394,10 +395,10 @@ public class DoublyLinkedList implements List {
 	/**
 	 * Вспомогательный метод для удаления заданного элемента
 	 */
-	private Object remove(Node x) {
-		Object oldData = x.data;
-		Node prev = x.prev;
-		Node next = x.next;
+	private T remove(Node<T> x) {
+		T oldData = x.data;
+		Node<T> prev = x.prev;
+		Node<T> next = x.next;
 		
 		if (prev == null) {
 			//если удаляемый элемент первый в списке, то first теперь должен ссылаться на второй элемент
@@ -424,14 +425,14 @@ public class DoublyLinkedList implements List {
 	/**
 	 * @return Итератор для перебора элементов списка
 	 */
-	public Iterator iterator() {		
+	public Iterator<T> iterator() {		
 		return new ListItr(0);
 	}
 	
 	/**
 	 * @return ListIterator - итератор, который позволяет перебирать элементы в обе стороны
 	 */
-	public ListIterator listIterator(int index) {		
+	public ListIterator<T> listIterator(int index) {		
 		return new ListItr(index);
 	}
 

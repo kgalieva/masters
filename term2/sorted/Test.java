@@ -13,7 +13,7 @@ public class Test {
 			new Employee("William", new BigDecimal(565)),
 			new Employee("Emily", new BigDecimal(133)) };
 
-	public static void checkList(List list) {
+	public static void checkList(List<Employee> list) {
 
 		System.out.println("  -----  " + list.getClass().getSimpleName()
 				+ "  -----  ");
@@ -22,7 +22,7 @@ public class Test {
 			list.addSort(e);
 		}
 		// создаем итератор с помощью метода iterator()
-		Iterator iter = list.iterator();
+		Iterator<Employee> iter = list.iterator();
 		// перебираем элементы с помощью итератора
 		while (iter.hasNext()) {
 			System.out.println(iter.next());
@@ -54,7 +54,7 @@ public class Test {
 			/*
 			 * Пример использования ListIterator
 			 */
-			ListIterator listIter = list.listIterator(0);
+			ListIterator<Employee> listIter = list.listIterator(0);
 			System.out.println(" --- forward --- ");
 			// перебор элементов списка в прямом порядке
 			while (listIter.hasNext()) {
@@ -82,13 +82,13 @@ public class Test {
 	}
 
 	public static void main(String[] args) {
-		List list = new SinglyLinkedList();
+		List<Employee> list = new SinglyLinkedList<>();
 		checkList(list);
 
-		list = new DoublyLinkedList();
+		list = new DoublyLinkedList<>();
 		checkList(list);
 
-		list = new ArrayList();
+		list = new ArrayList<>();
 		checkList(list);
 	}
 

@@ -9,10 +9,10 @@ import java.util.NoSuchElementException;
 /**  
  * Односвязный список
  */
-public class SinglyLinkedList implements List {
+public class SinglyLinkedList<T> implements List<T> {
 
 	// первый элемент списка
-	private Node first;
+	private Node<T> first;
 
 	// количество элементов в списке
 	private int size;
@@ -23,13 +23,13 @@ public class SinglyLinkedList implements List {
 	private int modCount;
 
 	// Класс элемента списка
-	private static class Node {
+	private static class Node<T> {
 		// ссылка на следующий элемент списка
-		Node next;
+		Node<T> next;
 		// данные текущего элемента
-		Object data;
+		T data;
 
-		public Node(Object data, Node next) {
+		public Node(T data, Node<T> next) {
 			this.data = data;
 			this.next = next;
 		}
@@ -38,14 +38,14 @@ public class SinglyLinkedList implements List {
 	/*
 	 * Итератор для перебора элементов списка
 	 */
-	private class Itr implements Iterator {
+	private class Itr implements Iterator<T> {
 		
 		/* Последний элемент, который вернул метод next. Если элемент был
 		 * удален, то lastReturned = null
 		 */
-		private Node lastReturned = null;
+		private Node<T> lastReturned = null;
 		// следующий элемент, который вернет метод next()
-		private Node next;
+		private Node<T> next;
 		// индекс следующего элемента, который вернет метод next()
 		private int nextIndex;
 		/* Запоминаем количество модификаций списка до начала перебора, 
@@ -72,7 +72,7 @@ public class SinglyLinkedList implements List {
 		 * @throws NoSuchElementException
 		 *             если в текущей итерации перебраны все элементы
 		 */
-		public Object next() {
+		public T next() {
 			// проверяем, не было ли конкурентных модификаций
 			checkForComodification();
 			// если в текущей итерации перебраны все элементы, кидаем исключение
@@ -153,15 +153,15 @@ public class SinglyLinkedList implements List {
 	/**
 	 * Метод получения значения элемента по индексу
 	 */
-	public Object get(int i) {
+	public T get(int i) {
 		return getNode(i).data;
 	}
 
 	/**
 	 * Метод добавления элемента в начало списка
 	 */
-	public boolean addFirst(Object o) {
-		first = new Node(o, first);
+	public boolean addFirst(T o) {
+		first = new Node<>(o, first);
 		size++;
 		modCount++;
 		return true;
@@ -170,14 +170,14 @@ public class SinglyLinkedList implements List {
 	/**
 	 * Метод добавления элемента на заданную позицию
 	 */
-	public boolean add(Object o, int i) {
+	public boolean add(T o, int i) {
 		if (i < 0) {
 			throw new IndexOutOfBoundsException("index = " + i);
 		}
 		if (size == 0 || i == 0) {
 			return addFirst(o);
 		}
-		Node current = first;
+		Node<T> current = first;
 		for (int j = 1; j < i && j < size; j++) {
 			current = current.next;
 		}
@@ -187,18 +187,18 @@ public class SinglyLinkedList implements List {
 	/**
 	 * Метод добавления элемента в конец списка
 	 */
-	public boolean addLast(Object o) {
+	public boolean addLast(T o) {
 		if (isEmpty()) {
-			first = new Node(o, null);
+			first = new Node<>(o, null);
 			size++;
 			modCount++;
 			return true;
 		}
-		Node current = first;
+		Node<T> current = first;
 		while (current.next != null){
 			current = current.next;
 		}
-		current.next = new Node(o, null);
+		current.next = new Node<>(o, null);
 		size++;
 		modCount++;
 		return true;
@@ -211,15 +211,16 @@ public class SinglyLinkedList implements List {
 	 * можно было сравнить друг с другом, используя метод compareTo(). В
 	 * противном случае будет брошено исключение ClassCastException.
 	 */
-	public boolean addSort(Object o) {
-		Comparable data = (Comparable)o;
+	@SuppressWarnings("unchecked")
+	public boolean addSort(T o) {
+		Comparable<? super T> data = (Comparable<? super T>)o;
 		if (size == 0 || data.compareTo(first.data) <= 0) {
-			first = new Node(o, first);
+			first = new Node<>(o, first);
 			size++;
 			modCount++;
 			return true;
 		}
-		Node current = first;
+		Node<T> current = first;
 		while (current.next != null && data.compareTo(current.next.data) > 0) {
 			current = current.next;
 		}
@@ -232,8 +233,8 @@ public class SinglyLinkedList implements List {
 	 * @param o Значение нового элемента
 	 * @return true, если вставка прошла успешно
 	 */
-	private boolean addAfter(Node current, Object o) {
-		Node newNode = new Node(o, current.next);
+	private boolean addAfter(Node<T> current, T o) {
+		Node<T> newNode = new Node<>(o, current.next);
 		current.next = newNode;
 		size++;
 		modCount++;
@@ -244,7 +245,7 @@ public class SinglyLinkedList implements List {
 	 * Метод добавления элемента в порядке заданном в Comparator. Все элементы
 	 * списка должны быть сравнимы друг с другом с помощью Comparator.
 	 */
-	public boolean addSort(Object o, Comparator c) {
+	public boolean addSort(T o, Comparator<? super T> c) {
 		// TODO ДЗ 26
 		return false;
 	}	
@@ -252,13 +253,13 @@ public class SinglyLinkedList implements List {
 	/**
 	 * Метод удаления элемента по индексу
 	 */
-	public Object remove(int i) {
+	public T remove(int i) {
 		if (i < 0 || i > size) {
 			throw new IndexOutOfBoundsException("index = " + i);
 		}
 		if (i == 0) {
-			Node removed = first;
-			Object oldData = removed.data;
+			Node<T> removed = first;
+			T oldData = removed.data;
 			first = first.next;
 			removed.next = null;
 			removed.data = null;
@@ -266,9 +267,9 @@ public class SinglyLinkedList implements List {
 			modCount++;
 			return oldData;
 		}
-		Node prev = getNode(i - 1);
-		Node removed = prev.next;
-		Object oldData = removed.data;
+		Node<T> prev = getNode(i - 1);
+		Node<T> removed = prev.next;
+		T oldData = removed.data;
 		prev = removed.next;
 		removed.next = null;
 		removed.data = null;
@@ -279,11 +280,11 @@ public class SinglyLinkedList implements List {
 	
 	/*Вспомогательный метод для получения элемента списка по индексу
 	 * */
-	private Node getNode(int index) {
+	private Node<T> getNode(int index) {
 		if (index < 0 || index > size) {
 			throw new IndexOutOfBoundsException("index = " + index);
 		}
-		Node current = first;
+		Node<T> current = first;
 		for (int i = 0; i < index; i++) {
 			current = current.next;
 		}
@@ -293,7 +294,7 @@ public class SinglyLinkedList implements List {
 	/**
 	 * @return Итератор для перебора элементов списка
 	 */
-	public Iterator iterator() {
+	public Iterator<T> iterator() {
 		return new Itr(0);
 	}
 	
@@ -306,7 +307,7 @@ public class SinglyLinkedList implements List {
 	}
 
 	@Override
-	public ListIterator listIterator(int index) {
+	public ListIterator<T> listIterator(int index) {
 		throw new UnsupportedOperationException();
 	}
 }

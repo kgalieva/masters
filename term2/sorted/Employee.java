@@ -2,7 +2,7 @@ package term2.sorted;
 
 import java.math.BigDecimal;
 
-public class Employee implements Comparable{
+public class Employee implements Comparable<Employee>{
 	
 	private String name;
 	private BigDecimal salary;	
@@ -30,8 +30,7 @@ public class Employee implements Comparable{
 	}
 
 	@Override
-	public int compareTo(Object o) {
-		Employee e = (Employee)o;
+	public int compareTo(Employee e) {
 		return name.compareTo(e.name);
 	}
 

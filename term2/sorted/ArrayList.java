@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 /**
  * Список на основе массива
  */
-public class ArrayList implements List {
+public class ArrayList<T> implements List<T> {
 	/**
 	 * Массив, в котором хранятся значения элементов списка
 	 */
@@ -28,7 +28,7 @@ public class ArrayList implements List {
 	 * Итератор, позволяющий перебирать элементы списка в обоих направлениях
 	 * http://docs.oracle.com/javase/7/docs/api/java/util/ListIterator.html
 	 */
-	private class ListItr implements ListIterator {
+	private class ListItr implements ListIterator<T> {
 		
 		//индекс следующего элемента, который вернет метод next()
 		int cursor; 
@@ -58,7 +58,8 @@ public class ArrayList implements List {
 		 * @throws NoSuchElementException
 		 *             если в текущей итерации перебраны все элементы
 		 */
-		public Object next() {
+		@SuppressWarnings("unchecked")
+		public T next() {
 			// проверяем, не было ли конкурентных модификаций
 			checkForComodification();
 			int i = cursor;
@@ -68,7 +69,7 @@ public class ArrayList implements List {
 			}
 			Object[] elementData = ArrayList.this.elements;
 			cursor = i + 1;
-			return elementData[lastRet = i];
+			return (T)elementData[lastRet = i];
 		}
 
 		/**
@@ -145,7 +146,8 @@ public class ArrayList implements List {
 		 * @throws NoSuchElementException
 		 *             если в текущей итерации перебраны все элементы в направлении к началу списка
 		 */
-		public Object previous() {
+		@SuppressWarnings("unchecked")
+		public T previous() {
 			checkForComodification();
 			int i = cursor - 1;
 			if (i < 0) {
@@ -153,7 +155,7 @@ public class ArrayList implements List {
 			}
 			Object[] elementData = ArrayList.this.elements;
 			cursor = i;
-			return elementData[lastRet = i];
+			return (T)elementData[lastRet = i];
 		}
 
 		/**
@@ -249,13 +251,14 @@ public class ArrayList implements List {
 	 * можно было сравнить друг с другом, используя метод compareTo(). В
 	 * противном случае будет брошено исключение ClassCastException.
 	 */
-	public boolean addSort(Object o) {
+	@SuppressWarnings("unchecked")
+	public boolean addSort(T o) {
 		ensureCapacity(size + 1);
-		Comparable value = (Comparable) o;
+		Comparable<? super T> value = (Comparable<? super T>) o;
 		int j = size - 1;
 		// сдвигаем элемены на 1 позицию назад пока не дойдем до начала массива,
 		// либо до меньшего элемента
-		for (; j >= 0 && value.compareTo(elements[j]) < 0; j--) {
+		for (; j >= 0 && value.compareTo((T)elements[j]) < 0; j--) {
 			elements[j + 1] = elements[j];
 		}
 		// заносим нужное значение в ячейку j+1
@@ -269,7 +272,7 @@ public class ArrayList implements List {
 	 * Метод добавления элемента в порядке заданном в Comparator. Все элементы
 	 * списка должны быть сравнимы друг с другом с помощью Comparator.
 	 */
-	public boolean addSort(Object o, Comparator c) {
+	public boolean addSort(T o, Comparator<? super T> c) {
 		// TODO ДЗ 26
 		return false;
 	}
@@ -277,21 +280,23 @@ public class ArrayList implements List {
 	/**
 	 * Метод получения значения элемента по индексу
 	 */
-	public Object get(int i) {
+	@SuppressWarnings("unchecked")
+	public T get(int i) {
 		if (i >= size) {
 			return null;
 		}
-		return elements[i];
+		return (T)elements[i];
 	}
 
 	/**
 	 * Метод удаления элемента по индексу
 	 */
-	public Object remove(int i) {
+	@SuppressWarnings("unchecked")
+	public T remove(int i) {
 		if (i >= size) {
 			return null;
 		}
-		Object oldValue = elements[i];
+		T oldValue = (T)elements[i];
 		// сдвигаем элемены на 1 позицию к началу массива
 		for (int j = i + 1; j < size; j++) {
 			elements[j - 1] = elements[j];
@@ -329,14 +334,14 @@ public class ArrayList implements List {
 	/**
 	 * @return Итератор для перебора элементов списка
 	 */
-	public Iterator iterator() {
+	public Iterator<T> iterator() {
 		return new ListItr(0);
 	}
 	
 	/**
 	 * @return ListIterator - итератор, который позволяет перебирать элементы в обе стороны
 	 */
-	public ListIterator listIterator(int index) {		
+	public ListIterator<T> listIterator(int index) {		
 		return new ListItr(index);
 	}	
 

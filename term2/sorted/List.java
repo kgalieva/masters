@@ -1,29 +1,28 @@
 package term2.sorted;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.ListIterator;
 
-public interface List extends Iterable{
+public interface List<T> extends Iterable<T>{
 	/**
 	 * Метод получения значения элемента по индексу
 	 */
-	Object get(int i);
+	T get(int i);
 
 	/**
 	 * Метод добавления элемента в начало списка
 	 */
-	boolean addFirst(Object o);
+	boolean addFirst(T o);
 	
 	/**
 	 * Метод добавления элемента в конец списка
 	 */
-	boolean addLast(Object o);
+	boolean addLast(T o);
 	
 	/**
 	 * Метод добавления элемента на заданную позицию
 	 */
-	boolean add(Object o, int i);
+	boolean add(T o, int i);
 	
 	/**
 	 * Метод добавления элемента в естественном порядке(Natural Order).
@@ -31,18 +30,18 @@ public interface List extends Iterable{
 	 * так чтобы их можно было сравнить друг с другом, используя метод compareTo().
 	 * В противном случае будет брошено исключение ClassCastException. 
 	 */
-	boolean addSort(Object o);
+	boolean addSort(T o);
 	
 	/**
 	 * Метод добавления элемента в порядке заданном в Comparator.
 	 * Все элементы списка должны быть сравнимы друг с другом с помощью Comparator.
 	 */
-	boolean addSort(Object o, Comparator c);
+	boolean addSort(T o, Comparator<? super T> c);
 
 	/**
 	 * Метод удаления элемента по индексу
 	 */
-	Object remove(int i);
+	T remove(int i);
 	
 	/**
 	 * Метод получения размера списка
@@ -59,5 +58,5 @@ public interface List extends Iterable{
 	/**
 	 * @return ListIterator - итератор, который позволяет перебирать элементы в обе стороны
 	 */
-	public ListIterator listIterator(int index);
+	public ListIterator<T> listIterator(int index);
 }
