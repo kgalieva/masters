@@ -8,6 +8,8 @@ import java.util.NoSuchElementException;
 
 /**
  * Двусвязный список, где каждый элемент содержит ссылки на предыдущий и следующий элементы. 
+ * Реализация java.util.LinkedList в openjdk 7
+ * http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/7-b147/java/util/LinkedList.java?av=f
  */
 public class DoublyLinkedList<T> implements List<T> {
 	

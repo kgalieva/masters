@@ -8,6 +8,8 @@ import java.util.NoSuchElementException;
 
 /**
  * Список на основе массива
+ * Реализация java.util.ArrayList в openjdk 7
+ * http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/7-b147/java/util/ArrayList.java?av=f
  */
 public class ArrayList<T> implements List<T> {
 	/**
