@@ -70,18 +70,16 @@ public class Tree {
 	}
 
 	/**
-	 * TODO Вставка узла 
-	 * Сначала создается новый узел на основе данных,
-	 * переданных в аргументах. Далее определяется место для вставки нового
-	 * узла, используя примерно тот же код, что и при поиске узла. Искомым
-	 * элементом является элемент, передаваемый в аргументе id. Цикл while
-	 * использует условие true, потому что обнаружение узла с тем же значением,
-	 * что у id, игнорируется; узел с совпадающим ключом интерпретируется так,
-	 * как если бы его ключ был больше искомого. В зависимости от значения ключа
-	 * текущего элемента, принимается решение к какому из потомков должен быть
-	 * совершен переход. Если соответствующий потомок равен null, то
-	 * осуществляется вставка нового элемента на место этого потомка, и
-	 * происходит выход из цикла.
+	 * Вставка узла Сначала создается новый узел на основе данных, переданных в
+	 * аргументах. Далее определяется место для вставки нового узла, используя
+	 * примерно тот же код, что и при поиске узла. Искомым элементом является
+	 * элемент, передаваемый в аргументе id. Цикл while использует условие true,
+	 * потому что обнаружение узла с тем же значением, что у id, игнорируется;
+	 * узел с совпадающим ключом интерпретируется так, как если бы его ключ был
+	 * больше искомого. В зависимости от значения ключа текущего элемента,
+	 * принимается решение к какому из потомков должен быть совершен переход.
+	 * Если соответствующий потомок равен null, то осуществляется вставка нового
+	 * элемента на место этого потомка, и происходит выход из цикла.
 	 * 
 	 * @param id
 	 *            Ключ
@@ -89,7 +87,28 @@ public class Tree {
 	 *            Значение
 	 */
 	public void insert(int id, double data) {
-	
+		Node newNode = new Node(id, data);
+		size++;
+		if (root == null) {
+			root = newNode;
+			return;
+		}
+		Node current = root;
+		while (true) {
+			if (current.id > id) {
+				if (current.leftChild == null) {
+					current.leftChild = newNode;
+					return;
+				}
+				current = current.leftChild;
+			} else {
+				if (current.rightChild == null) {
+					current.rightChild = newNode;
+					return;
+				}
+				current = current.rightChild;
+			}
+		}
 	}
 
 	/**
@@ -169,12 +188,22 @@ public class Tree {
 	}
 
 	/**
-	 * TODO Поиск элемента с максимальным значением ключа
+	 * Поиск элемента с максимальным значением ключа
 	 * 
 	 * @return Значение элемента с максимальным значением ключа
 	 */
 	public Double max() {
-		return null;
+		// если дерево пустое, то элемент не найден
+		if (root == null) {
+			return null;
+		}
+		// начинаем обход с корневого элемента
+		Node current = root;
+		while (current.rightChild != null) {
+			// переход к правому потомку
+			current = current.rightChild;
+		}
+		return current.data;
 	}
 
 	/**
@@ -221,18 +250,38 @@ public class Tree {
 		}
 		// если нет правого потомка, узел заменяется левым поддеревом
 		else if (current.rightChild == null) {
-			//TODO
+			if (current == root) {
+				root = current.leftChild;
+			} else if (isLeftChild) {
+				parent.leftChild = current.leftChild;
+			} else {
+				parent.rightChild = current.leftChild;
+			}
 		}
 		// если нет левого потомка, узел заменяется правым поддеревом
 		else if (current.leftChild == null) {
-			
+			if (current == root) {
+				root = current.rightChild;
+			} else if (isLeftChild) {
+				parent.leftChild = current.rightChild;
+			} else {
+				parent.rightChild = current.rightChild;
+			}
 		}
 		// два потомка, узел заменяется переемником
 		else {
 			// поиск переемника для удаляемого узла(current)
 			Node successor = getSuccessor(current);
 			// родитель current связывается с переемником
-			//TODO
+			if (current == root) {
+				root = successor;
+			} else if (isLeftChild) {
+				parent.leftChild = successor;
+			} else {
+				parent.rightChild = successor;
+			}			 
+			//переемник связывается с левым потомком current
+	         successor.leftChild = current.leftChild;
 		}
 		return true;
 	}
