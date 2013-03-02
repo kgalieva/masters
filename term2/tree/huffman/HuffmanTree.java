@@ -63,7 +63,19 @@ public class HuffmanTree implements Comparable<HuffmanTree>{
 	 */
 	public static HuffmanTree buildHuffmanTree(int[] charFrequencies) {
 		  PriorityQueue<HuffmanTree> trees = new PriorityQueue<>();
-	      //TODO 1.-6.
+	        // 1. - 3.
+	        for (int i = 0; i < charFrequencies.length; i++) {
+	            if (charFrequencies[i] > 0) {
+	                trees.offer(new HuffmanTree(new Node(charFrequencies[i], (char)i)));
+	            }
+	        }	 	        
+	        // 6. пока в очереди не останется только одно дерево
+	        while (trees.size() > 1) {
+	            // 4. - 5.
+	            HuffmanTree a = trees.poll();
+	            HuffmanTree b = trees.poll();
+	            trees.offer(new HuffmanTree(new Node(a, b)));
+	        }
 	        /*Когда в очереди останется всего одно дерево, оно представляет собой дерево Хаффмана. */
 	        return trees.poll();
 	}
@@ -82,7 +94,7 @@ public class HuffmanTree implements Comparable<HuffmanTree>{
 	 */
 	public String decode(String bytes) {
 		StringBuilder result = new StringBuilder();
-		//TODO
+		//TODO #36
 		return result.toString();
 	}
 	
@@ -98,7 +110,9 @@ public class HuffmanTree implements Comparable<HuffmanTree>{
       StringBuilder result = new StringBuilder();
       /*Далее коды Хаффмана раз за разом присоединяются к кодированному сообщению, 
        * пока оно не будет завершено.*/
-    //TODO
+      for (int i = 0; i < text.length(); i++) {
+      	result.append(codes[text.charAt(i)]);
+      }
       return result.toString();
 	}
 	
@@ -124,7 +138,14 @@ public class HuffmanTree implements Comparable<HuffmanTree>{
 	 * @param codeTable кодовая таблица
 	 */
 	private void codeTable(Node node, StringBuilder code, String[] codeTable) {
-		//TODO
+		if (node.character != null) {
+			codeTable[(char)node.character] = code.toString();
+			return;
+		}
+		codeTable(node.leftChild, code.append('0'), codeTable);
+		code.deleteCharAt(code.length() - 1);
+		codeTable(node.rightChild, code.append('1'), codeTable);
+		code.deleteCharAt(code.length() - 1); 
 	}
 	
 	public void printCodes() {
