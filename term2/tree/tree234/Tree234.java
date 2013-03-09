@@ -86,30 +86,7 @@ public class Tree234<K, V> {
 	 *  потомки 2 и 3(newRight.connectChild()), которые были отсоединены от разбиваемого узла.
 	 */
 	public void split(Node<K, V> node) {
-		Node.Entry<K, V> rightItem = node.removeItem();
-		Node.Entry<K, V> middleItem = node.removeItem();
-		
-		Node<K, V> thirdChild = node.disconnectChild(3);		
-		Node<K, V> secondChild = node.disconnectChild(2);
-		
-		Node<K, V> newRight = new Node<K, V>();
-		if(node.getParent() == null){
-			root = new Node<K, V>();
-			root.connectChild(0, node);
-			node.setParent(root);			
-		}
-		Node<K, V> parent = node.getParent();
-		newRight.setParent(parent);
-		int index = parent.insertItem(middleItem.getKey(), middleItem.getValue());
-		Node<K, V> temp;
-		for(int i = parent.getNumItems() - 1; i > index; i--) {
-			temp = parent.disconnectChild(i);
-			parent.connectChild(i + 1, temp);
-		}
-		parent.connectChild(index + 1, newRight);
-		newRight.insertItem(rightItem.getKey(), rightItem.getValue());
-		newRight.connectChild(0, secondChild);
-		newRight.connectChild(1, thirdChild);		
+		//TODO
 	}
 	
 	public void displayTree(){
