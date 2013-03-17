@@ -284,6 +284,7 @@ public class Tree {
 			//переемник связывается с левым потомком current
 	         successor.leftChild = current.leftChild;
 		}
+		size--;
 		return true;
 	}
 
