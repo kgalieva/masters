@@ -64,7 +64,12 @@ public class RedBlackTree<K, V> {
 	public V put(K key, V value) {
 		Node t = root;
 		if (t == null) {
-			compare(key, key); // type (and possibly null) check
+			/* Проверка типа ключа и проверка ключа на null
+			 * Если ключ равен null, то будет брошен NullPointerException
+			 * Если не задан Comparator, то ключ должен реализовывать интерфейс Comparable<? super K>,
+			 * в противном случае  будет брошен ClassCastException
+			 */
+			compare(key, key);
 			root = new Node(key, value, BLACK, null);
 			size = 1;
 			return null;
