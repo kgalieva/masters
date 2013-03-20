@@ -9,10 +9,10 @@ public class Node<K, V> {
 	public static final int ORDER = 4;	
 	//Ссылки на потомков узла(их максимальное количество равно четырем)
 	@SuppressWarnings("unchecked")
-	private Node<K, V> childArray[] = (Node<K, V>[])new Node[ORDER];
+	private Node[] childArray = new Node[ORDER];
 	//Элементы DataItem хранящиеся в узле. В каждом узле по 3 ячейки.
 	@SuppressWarnings("unchecked")
-	private Entry<K, V> itemArray[] = (Entry<K, V>[])new Entry[ORDER - 1];
+	private Entry[] itemArray = new Entry[ORDER - 1];
 	//Текущее количество элементов данных в узле
 	private int numItems;
 	//Ссылка на родительский узел
