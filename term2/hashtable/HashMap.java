@@ -1,7 +1,15 @@
 package term2.hashtable;
 
-public class HashMap<K, V> {
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
+public class HashMap<K, V> {
+	/**
+	 * Элменты Map представляют собой пары ключ-значение
+	 * @param <K>
+	 * @param <V>
+	 */
 	static class Entry<K, V> {
 		final K key;
 		V value;
@@ -30,9 +38,13 @@ public class HashMap<K, V> {
 		}
 	}
 
-	private int size;
-	private Entry[] table = new Entry[16];
 	static final float LOAD_FACTOR = 0.75f;
+	private int size;	
+	private Entry[] table = new Entry[16];
+	private int modCount;
+	private Iterable<V> values;
+	private Iterable<Entry<K, V>> entrySet;
+	
 
 	public V get(Object key) {
 		int hash = (key == null) ? 0 : key.hashCode();
@@ -113,6 +125,7 @@ public class HashMap<K, V> {
 					prev.next = e.next;
 				}
 				e.next = null;
+				modCount++;
 				return e.value;
 			}
 			prev = e;
@@ -137,5 +150,110 @@ public class HashMap<K, V> {
 
 	public boolean isEmpty() {
 		return size == 0;
+	}
+	
+	/**
+	 * Итератор для перебора элементов хеш-таблицы
+	 */
+	private abstract class HashIterator<E> implements Iterator<E> {
+		//следующий элемент, который вернет итератор
+		Entry<K, V> next; 
+		//поле для защиты от модификации хеш-таблицы во время ее перебора 
+		int expectedModCount; 
+		//текущая ячейка хеш-таблицы
+		int index;
+		//последний элемент, который вернул итератор
+		Entry<K, V> current;
+
+		HashIterator() {
+			//запоминаем количество модификаций, которое было до начала перебора
+			expectedModCount = modCount;
+			if (size > 0) {
+				//пропускаем нулевые ячейки в начале таблицы
+				while (index < table.length && table[index] == null){
+					index++;
+				}
+				next = table[index];
+			}
+		}
+
+		public final boolean hasNext() {
+			return next != null;
+		}
+		/* */
+		final Entry<K, V> nextEntry() {
+			//проверяем, не было ли модификаций хеш-таблицы во время перебора элементов
+			if (modCount != expectedModCount) {
+				throw new ConcurrentModificationException();
+			}			
+			if (next == null) {
+				throw new NoSuchElementException();
+			}
+			current = next;
+			//ищем следующий элемент
+			next = next.next;			
+			if (next == null) {
+				//если в текущей цепочке закончились элемненты, то перемещаемся в следующую ненулевую ячейку
+				while (++index < table.length && (next = table[index]) == null)
+					;
+			}
+			return current;
+		}
+
+		public void remove() {
+			if (current == null) {
+				throw new IllegalStateException();
+			}
+			if (modCount != expectedModCount) {
+				throw new ConcurrentModificationException();
+			}
+			Object k = current.key;
+			current = null;
+			HashMap.this.remove(k);
+			expectedModCount = modCount;
+		}
+	}	
+	/**Метод, который возвращает итерируемый набор значений элементов, которые лежат в хеш-таблице*/
+	public Iterable<V> values() {
+		return values != null ? values : (values = new Values());
+	}
+	
+	/**
+	 * Итератор для перебора значений элементов, которые лежат в хеш-таблице
+	 */
+	private final class ValueIterator extends HashIterator<V> {
+		public V next() {
+			return nextEntry().value;
+		}
+	}
+	
+	/**
+	 * Вспомогательный класс с возможностью итерации по значениям
+	 */
+	private final class Values implements Iterable<V> {
+		public Iterator<V> iterator() {
+			return new ValueIterator();
+		}
+	}	
+
+	public Iterable<K> keySet() {
+		//TODO
+		return null;
+	}
+
+	public Iterable<Entry<K, V>> entrySet() {
+		return entrySet != null ? entrySet : (entrySet = new EntrySet());
+	}
+
+	private final class EntryIterator extends HashIterator<Entry<K, V>> {
+		public Entry<K, V> next() {
+			return nextEntry();
+		}
+	}
+
+	private final class EntrySet implements Iterable<Entry<K, V>> {
+		public Iterator<Entry<K, V>> iterator() {
+			return new EntryIterator();
+		}
 	}
 }
