@@ -310,4 +310,110 @@ public class SinglyLinkedList<T> implements List<T> {
 	public ListIterator<T> listIterator(int index) {
 		throw new UnsupportedOperationException();
 	}
+	
+	/*
+	 * метод сортировки
+	 */
+	public void sort() {
+		first = mergeSort(first);
+	}
+
+	public Node<T> mergeSort(Node<T> head) {
+		if (head == null || head.next == null) {
+			return head;
+		}
+		Node<T> a = head;
+		Node<T> b = head.next;
+		//ищем середину списка
+		while (b != null && b.next != null) {
+			a = a.next;
+			/* b двигается в 2 раза быстрее a, 
+			 * поэтому, когда b дойдет до конца списка, 
+			 * a будет как раз на середине.
+			 */
+			b = b.next.next;
+		}
+		b = a.next;
+		//разрываем два списка
+		a.next = null;
+		return merge(mergeSort(head), mergeSort(b));
+	}
+
+	@SuppressWarnings("unchecked")
+	public Node<T> merge(Node<T> a, Node<T> b) {
+		/* Если изначально поинициализировать первый элемент каким-то 
+		 * фейковым значением, то алгоритм слияния значительно упрощается, 
+		 * поскольку проверки на null больше не требуются.
+		 * Сравните методы  merge и merge2.
+		 */
+		Node<T> head = new Node<>(null, null);
+		Node<T> c = head;
+		while (a != null && b != null) {
+			if (((Comparable<T>) a.data).compareTo(b.data) < 0) {
+				c.next = a;
+				c = a;
+				a = a.next;
+			} else {
+				c.next = b;
+				c = b;
+				b = b.next;
+			}
+		}
+		//приципляем оставшийся хвост
+		if (a == null) {			
+			c.next = b;
+		}
+		if (b == null) {			
+			c.next = a;
+		}
+		//избавляемся от временного элемента в начале списка
+		c = head;
+		head = head.next;
+		c.next = null;
+		return head;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Node<T> merge2(Node<T> a, Node<T> b) {
+		Node<T> c = null;
+		Node<T> head = null;
+		while (a != null && b != null) {
+			if (((Comparable<T>) a.data).compareTo(b.data) < 0) {
+				if (c != null) {
+					c.next = a;
+					c = a;
+				} else {
+					c = a;
+					head = c;
+				}
+				a = a.next;
+			} else {
+				if (c != null) {
+					c.next = b;
+					c = b;
+				} else {
+					c = b;
+					head = c;
+				}
+				b = b.next;
+			}
+		}
+		if (a == null) {
+			if (c == null) {
+				c = b;
+				head = c;
+			} else {
+				c.next = b;
+			}
+		}
+		if (b == null) {
+			if (c == null) {
+				c = a;
+				head = c;
+			} else {
+				c.next = a;
+			}
+		}
+		return head;
+	}
 }

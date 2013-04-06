@@ -89,7 +89,7 @@ public class Test {
 		checkList(list);
 
 		list = new ArrayList<>();
-		checkList(list);
+		checkList(list);		
 	}
 
 }
