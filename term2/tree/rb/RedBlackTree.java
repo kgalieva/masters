@@ -98,9 +98,17 @@ public class RedBlackTree<K, V> {
 			if (key == null) {
 				throw new NullPointerException();
 			}
-			//TODO аналогичная вставка для ключей реализующих Comparable
-			cmp = 0;
-			parent = null;
+			 Comparable<? super K> k = (Comparable<? super K>) key;
+			              do {
+			                  parent = t;
+			                  cmp = k.compareTo(t.key);
+			                  if (cmp < 0)
+			                      t = t.leftChild;
+			                  else if (cmp > 0)
+			                      t = t.rightChild;
+			                  else
+			                      return t.setValue(value);
+			              } while (t != null);
 		}
 		Node e = new Node(key, value, RED, parent);
 		if (cmp < 0) {
@@ -151,8 +159,23 @@ public class RedBlackTree<K, V> {
 					rotateRight(parentOf(parentOf(x)));
 				}
 			} else {
-				//TODO симметричный случай
-			
+				//симметричный случай
+				Node y = leftOf(parentOf(parentOf(x)));				
+				if (colorOf(y) == RED) {
+					// фиксим правило 3
+					flipColors(parentOf(parentOf(x)));
+					x = parentOf(parentOf(x));
+				} else {
+					
+					if (x == leftOf(parentOf(x))) {
+						//x - внутренний внук
+						x = parentOf(x);
+						rotateRight(x);
+					}
+					//x - внешний внук
+					flipColors(parentOf(parentOf(x)));
+					rotateLeft(parentOf(parentOf(x)));
+				}
 			}
 		}
 		root.color = BLACK;
@@ -225,12 +248,25 @@ public class RedBlackTree<K, V> {
 	}
 	
 	/**
-	 * TODO
 	 * Поворот право
 	 * @param p узел, относительно которого осуществляется поворот
 	 */
 	private void rotateRight(Node p) {
-	
+		if (p != null) {
+			Node l = p.leftChild;
+			p.leftChild = l.rightChild;
+			if (l.rightChild != null)
+				l.rightChild.parent = p;
+			l.parent = p.parent;
+			if (p.parent == null)
+				root = l;
+			else if (p.parent.rightChild == p)
+				p.parent.rightChild = l;
+			else
+				p.parent.leftChild = l;
+			l.rightChild = p;
+			p.parent = l;
+		}
 	}
 	
 	/**
