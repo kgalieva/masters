@@ -1,5 +1,7 @@
 package term2.disjointsets;
 
+import java.util.Arrays;
+
 /**
  * СД Непересекающиеся множества(disjoint sets) или Объединить-Найти(find-union).
  * Взвешенное объединение со сжатием пути.
@@ -37,7 +39,9 @@ public class DisjointSets {
    **/
 	public void union(int root1, int root2) {
 		if (array[root2] < array[root1]) {
-			// меньшее дерево становится поддеревом большего} else {
+			// меньшее дерево становится поддеревом большего
+			array[root1] = root2;
+		} else {
 			if (array[root1] == array[root2]) {
 				/*
 				 * Если оба дерева имели одну и ту же высоту, то высота нового
@@ -72,6 +76,11 @@ public class DisjointSets {
 			array[x] = find(array[x]);
 			return array[x];
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return "DisjointSets [array=" + Arrays.toString(array) + "]";
 	}
 
 	public static void main(String[] args) {

@@ -39,9 +39,51 @@ public class PriorityQueueHeap<T> implements PriorityQueue<T> {
 	 * посредством копирования на каждом шаге значения родителя в текущую ячейку. А после того как дошли 
 	 * до нужной позиции узла, записываем его значение в ячейку один раз.
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void offer(T e) {
-		//TODO
+		if (e == null) {
+			throw new NullPointerException();
+		}
+		ensureCapacity(size + 1);		
+		if (size == 0) {
+			heap[0] = e;
+		} else {
+			upHeapify(size, e);
+		}
+		size++;
+	}
+
+	private void upHeapify(int k, T x) {
+		Comparable<? super T> key = (Comparable<? super T>) x;
+		while (k > 0) {
+			int parent = (k - 1) >>> 1;
+			Object e = heap[parent];
+			if (key.compareTo((T) e) >= 0) {
+				break;
+			}
+			heap[k] = e;
+			k = parent;
+		}
+		heap[k] = key;
+	}
+		 
+	
+	private void ensureCapacity(int size) {
+		if (size <= heap.length) {
+			return;
+		}
+		/*
+		 * создаем новый массив размера в 2 раза больше, чем количество
+		 * элементов, которое мы хотим там разместить
+		 */
+		Object[] newElements = new Object[2 * size];
+		// копируем в него элементы из старого массива
+		for (int i = 0; i < heap.length; i++) {
+			newElements[i] = heap[i];
+		}
+		// присваеваем новый массив полю elements
+		heap = newElements;
 	}
 
 	/**
