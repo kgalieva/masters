@@ -16,7 +16,7 @@ public class HelloServlet extends HttpServlet {
             String username = request.getParameter("username");
             request.setAttribute("message", "Hello " + username);
             getServletConfig().getServletContext().getRequestDispatcher(
-                    "/WEB-INF/jsp/hello.jsp").forward(request, response);
+                    "/jsp/hello.jsp").forward(request, response);
 
     }
 }

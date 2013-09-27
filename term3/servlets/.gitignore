@@ -3,6 +3,9 @@ target/*
 .classpath
 .project
 .idea
+.gradle
+build/*
 *.iml
 /target
 out/*
+log*
