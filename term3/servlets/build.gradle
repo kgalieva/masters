@@ -30,6 +30,7 @@ allprojects {
     [tomcatRun, tomcatRunWar, tomcatStop]*.stopPort = 8090
     [tomcatRun, tomcatRunWar, tomcatStop]*.stopKey = 'foo'
     [tomcatRun, tomcatRunWar, tomcatStop]*.outputFile = file("logs.txt")
+    [tomcatRun, tomcatRunWar, tomcatStop]*.URIEncoding = 'UTF-8'
 
 }
 
