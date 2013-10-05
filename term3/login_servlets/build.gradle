@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:0.9.9'
+    }
+}
+allprojects {
+    apply plugin: 'war'
+    apply plugin: 'tomcat'
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        providedCompile "javax.servlet:javax.servlet-api:3.1.0"
+        compile "javax.servlet:jstl:1.2"
+        compile "postgresql:postgresql:9.1-901.jdbc4"
+        testCompile "juint:junit:4.10"
+
+        def tomcatVersion = '7.0.42'
+        tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+                "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+        tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+            exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+        }
+    }
+
+    [tomcatRun, tomcatRunWar, tomcatStop]*.stopPort = 8090
+    [tomcatRun, tomcatRunWar, tomcatStop]*.stopKey = 'foo'
+    [tomcatRun, tomcatRunWar, tomcatStop]*.outputFile = file("logs.txt")
+    [tomcatRun, tomcatRunWar, tomcatStop]*.URIEncoding = 'UTF-8'
+
+}
+
+
