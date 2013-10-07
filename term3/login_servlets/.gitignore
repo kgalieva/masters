@@ -8,5 +8,5 @@ build/*
 *.iml
 /target
 out/*
-log*
+logs*
 src/main/test/*
