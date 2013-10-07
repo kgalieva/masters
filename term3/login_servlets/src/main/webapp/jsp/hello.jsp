@@ -6,6 +6,9 @@
     <title>hello</title>
   </head>
   <body>
-       <h2><c:out value="${message}"/></h2>
+        <c:forEach items="${credentials}" var="credential">
+            <p><c:out value="${credential.login}"/></p>
+            <p><c:out value="${credential.password}"/></p>
+        </c:forEach>
   </body>
 </html>

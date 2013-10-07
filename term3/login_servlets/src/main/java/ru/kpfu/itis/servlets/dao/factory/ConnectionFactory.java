@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
     private final String driverClassName = "org.postgresql.Driver";
-    private final String connectionUrl = "jdbc:postgresql://localhost:5432/studentbook";
-    private final String dbUser = "stb";
-    private final String dbPwd = "stbpasswd";
+    private final String connectionUrl = "jdbc:postgresql://10.13.1.162:5432/logindb";
+    private final String dbUser = "practice";
+    private final String dbPwd = "123";
 
     private static ConnectionFactory connectionFactory = null;
 

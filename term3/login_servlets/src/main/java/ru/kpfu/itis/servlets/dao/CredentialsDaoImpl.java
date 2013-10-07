@@ -115,8 +115,9 @@ public class CredentialsDaoImpl implements CredentialsDao{
             rs = ptmt.executeQuery();
             while (rs.next()) {
                 credentials = new Credentials();
-                credentials.setLogin(rs.getString(1));
-                credentials.setPassword(rs.getString(2));
+                credentials.setId(rs.getLong(1));
+                credentials.setLogin(rs.getString(2));
+                credentials.setPassword(rs.getString(3));
 
                 credentialss.add(credentials);
             }

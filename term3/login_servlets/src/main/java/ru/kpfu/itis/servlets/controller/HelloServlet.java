@@ -21,7 +21,12 @@ public class HelloServlet extends HttpServlet {
     public void doGet (HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
 
-            //TODO
+
+        String username = request.getParameter("username");
+
+        request.setAttribute("credentials",  credentialsDao.findAll());
+        getServletConfig().getServletContext().getRequestDispatcher(
+                "/jsp/hello.jsp").forward(request, response);
 
     }
 }
