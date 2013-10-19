@@ -1,0 +1,18 @@
+## Импорт проекта:
+**IDEA**
+File -> Import Project -> выбираем masters/term3/servlets -> Create project from existing sources
+
+**Eclipse**
+File -> new Java Project-> снимаем галочку Use default location и указываем пусть до папки masters/term3/servlets
+
+## Запуск проекта:
+
+**IDEA**
+После того, как открыли проект, справа найдите вкладку JetGradle. Укажите в ней файл build.gradle
+
+Перейдите на вкладку Tasks и запустите задачу tomcatRunWar
+
+**Консоль**
+C помощью команды cd перейдите в директорию проекта masters/term3/servlets и выполните команду gradle tomcatRunWar
+
+Чтобы остановить tomcat, есть команда gradle tomcatStop
