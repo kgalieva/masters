@@ -12,11 +12,12 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    CredentialsDao credentialsDao = new CredentialsDaoImpl();
+   
 
     @Override
     public void doGet (HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
+	 CredentialsDao credentialsDao = new CredentialsDaoImpl();
 
         request.setAttribute("credentials",  credentialsDao.findAll());
         getServletConfig().getServletContext().getRequestDispatcher(
