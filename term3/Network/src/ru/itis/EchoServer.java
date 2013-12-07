@@ -53,7 +53,7 @@ public class EchoServer {
     }
 
     public static void main(String[] args) throws IOException {
-        EchoServer2 echoServer2 = new EchoServer2();
-        echoServer2.initServer();
+        EchoServer echoServer = new EchoServer();
+        echoServer.initServer();
     }
 } 
