@@ -1,3 +1,0 @@
-<template>
-  <input-field default="foo.bar">IJ_BASE_PACKAGE</input-field>
- <icon-path>/icons/spring.png</icon-path></template>
