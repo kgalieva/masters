@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:0.9.9'
+    }
+}
+
+allprojects {
+    apply plugin: 'war'
+    apply plugin: 'tomcat'
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile("org.springframework:spring-core:4.0.1.RELEASE")
+        compile("org.springframework:spring-context:4.0.1.RELEASE")
+        compile("org.springframework:spring-web:4.0.1.RELEASE")
+        compile("org.springframework:spring-webmvc:4.0.1.RELEASE")
+        compile("javax.servlet.jsp:jsp-api:2.2")
+        compile "javax.servlet:jstl:1.2"
+        compile("javax.servlet:servlet-api:2.5")
+
+        def tomcatVersion = '7.0.42'
+        tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+                "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+        tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+            exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+        }
+    }
+
+    [tomcatRun, tomcatRunWar, tomcatStop]*.stopPort = 8090
+    [tomcatRun, tomcatRunWar, tomcatStop]*.stopKey = 'foo'
+    [tomcatRun, tomcatRunWar, tomcatStop]*.URIEncoding = 'UTF-8'
+
+}
+
