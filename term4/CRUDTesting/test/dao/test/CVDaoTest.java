@@ -35,7 +35,6 @@ public class CVDaoTest {
     }
 
     @Test
-    @Transactional
     public void testFindAll() throws SQLException {
         List<CV> cvList = cvDao.findAll();
         assertNotNull(cvList);
@@ -47,7 +46,6 @@ public class CVDaoTest {
     }
 
     @Test
-    @Transactional
     public void testCRUD() throws SQLException {
         CV cv = createCV();
         cvDao.add(cv);
