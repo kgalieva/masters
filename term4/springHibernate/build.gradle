@@ -1,0 +1,79 @@
+apply plugin: 'war'
+apply plugin: 'tomcat'
+apply plugin: 'java'
+apply plugin: 'idea'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:0.9.9'
+    }
+}
+
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile("org.hibernate:hibernate-core:3.3.2.GA")
+        compile("org.hibernate:hibernate-annotations:3.3.1.GA")
+        compile("org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final")
+        compile("org.hibernate:hibernate-commons-annotations:3.0.0.ga")
+        compile("org.hibernate:hibernate-validator:3.1.0.GA")
+        compile("org.hibernate:hibernate-entitymanager:3.3.2.GA")
+        compile("org.springframework:spring-core:3.2.3.RELEASE")
+        compile("org.springframework:spring-context:3.2.3.RELEASE")
+        compile("org.springframework:spring-aop:3.2.3.RELEASE")
+        compile("org.springframework:spring-orm:3.2.3.RELEASE")
+        compile("org.springframework:spring-jdbc:3.2.3.RELEASE")
+        compile("org.springframework:spring-tx:3.2.3.RELEASE")
+        compile("org.springframework:spring-web:3.2.3.RELEASE")
+        compile("org.springframework:spring-webmvc:3.2.3.RELEASE")
+
+        compile("aopalliance:aopalliance:1.0")
+        compile("javassist:javassist:3.9.0.GA")
+        compile("c3p0:c3p0:0.9.1.2")
+        compile("org.antlr:antlr:3.4")
+        compile("org.postgresql:postgresql:9.3-1100-jdbc41")
+        compile("org.aspectj:aspectjweaver:1.7.4")
+        compile("org.slf4j:slf4j-api:1.7.5")
+        compile("dom4j:dom4j:1.6.1")
+        compile("javax.transaction:jta:1.1")
+        compile("javax.servlet.jsp:jsp-api:2.2")
+        compile "javax.servlet:jstl:1.2"
+        compile("javax.servlet:servlet-api:2.5")
+        compile("commons-collections:commons-collections:3.2.1")
+        compile("commons-dbcp:commons-dbcp:1.4")
+        compile("commons-logging:commons-logging:1.1.1")
+        compile("commons-pool:commons-pool:1.6")
+
+        testCompile "org.springframework:spring-test:3.2.3.RELEASE"
+        testCompile 'junit:junit:4.8'
+
+
+
+        def tomcatVersion = '7.0.42'
+        tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+                "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+        tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+            exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+        }
+    }
+
+test {
+    testLogging {
+        // Show that tests are run in the command-line output
+        events 'started', 'passed'
+    }
+}
+
+    [tomcatRun, tomcatRunWar, tomcatStop]*.stopPort = 8090
+    [tomcatRun, tomcatRunWar, tomcatStop]*.stopKey = 'foo'
+    [tomcatRun, tomcatRunWar, tomcatStop]*.URIEncoding = 'UTF-8'
+
+
+
