@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div th:fragment="header(page)">
+    <div class="page-header">
+        <h1>Head Hunter <small>ITIS edition</small></h1>
+    </div>
+    <ul class="nav nav-pills">
+        <li><a href="/">Главная</a></li>
+        <li th:classappend="${page == 'cv'}? 'active'"><a href="/cv/1">Резюме</a></li>
+        <li th:classappend="${page == 'vacancy'}? 'active'"><a href="/vacancy/1">Вакансия</a></li>
+        <li th:classappend="${page == 'user'}? 'active'"><a href="/user/1">Пользователь</a></li>
+        <li th:classappend="${page == 'company'}? 'active'"><a href="/company/1">Компания</a></li>
+    </ul>
+</div>
+
+</body>
+
+</html>

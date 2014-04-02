@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>HH</title>
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <div th:include="layout :: header(user)"></div>
+    <h3>Каталог резюме</h3>
+    <ul class="nav nav-pills">
+        <li th:each="cat : ${allCategories}"><a th:href="'/cv/list/'+ ${cat.id}" th:text="${cat.name}">Home</a></li>
+    </ul>
+    <ul class="list-unstyled">
+        <li th:each="cv : ${cvList}">
+            <div class="col-xs-6"><a th:href="'/cv/' + ${cv.id}" th:text="${cv.title}">Менеджер</a></div>
+            <div class="col-xs-3"><small th:text="${cv.experience + ' года'}">2 года</small></div>
+            <div class="col-xs-3"><small th:text="${cv.owner.city}">Казань</small></div></li>
+    </ul>
+</div>
+</body>
+</html>
