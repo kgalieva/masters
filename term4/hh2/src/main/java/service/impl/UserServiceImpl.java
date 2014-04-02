@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Iterable<CV> getCVListByCategoryId(Long categoryID) {
-        return cvRepository.findByCategory(categoryID);
+    public Iterable<CV> getCVListByCategoryId(Long categoryId) {
+        return cvRepository.findByCategory(categoryId);
     }
 }

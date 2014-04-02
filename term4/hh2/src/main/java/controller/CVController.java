@@ -31,14 +31,16 @@ public class CVController {
     public ModelAndView getCV() {
         ModelAndView mv = new ModelAndView("cv_list");
         mv.addObject("cvList", userService.getAllCVs());
+        mv.addObject("category", 0);
         mv.addObject("allCategories", searchService.getAllCategories());
         return mv;
     }
 
-    @RequestMapping("/cv/list/{id}")
-    public ModelAndView getCVByCategory(Long categoryID) {
+    @RequestMapping("/cv/list/{categoryId}")
+    public ModelAndView getCVByCategory(@PathVariable Long categoryId) {
         ModelAndView mv = new ModelAndView("cv_list");
-        mv.addObject("cvList", userService.getCVListByCategoryId(categoryID));
+        mv.addObject("cvList", userService.getCVListByCategoryId(categoryId));
+        mv.addObject("category", categoryId);
         mv.addObject("allCategories", searchService.getAllCategories());
         return mv;
     }

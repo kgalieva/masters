@@ -96,4 +96,14 @@ public class CVRepositoryTest {
         cvRepository.save(cv);
         assertEquals(cvRepository.findId(CV_TITLE), cv.getId());
     }
+
+    @Test
+    public void testFindByCategory() {
+        CV cv = standardCV();
+        cvRepository.save(cv);
+        Iterable<CV> cvs = cvRepository.findByCategory(cv.getCategories().get(0).getId());
+        assertNotNull(cvs);
+        assertTrue(cvs.iterator().hasNext());
+        assertNotNull(cvs.iterator().next());
+    }
 }
