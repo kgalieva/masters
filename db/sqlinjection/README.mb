@@ -1,3 +1,5 @@
+Статья с примером http://www.javacodegeeks.com/2012/11/sql-injection-in-java-application.html
+
 Предварительно установите gradle и пропишите в PATH путь до папки bin.
 
 ## Импорт проекта:
