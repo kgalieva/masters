@@ -1,9 +1,11 @@
+Предварительно установите gradle и пропишите в PATH путь до папки bin.
+
 ## Импорт проекта:
 **IDEA**
-File -> Import Project -> выбираем masters/term3/servlets -> Create project from existing sources
+File -> Import Project -> выбираем masters/db/sqlinjection -> Create project from existing sources
 
 **Eclipse**
-File -> new Java Project-> снимаем галочку Use default location и указываем пусть до папки masters/term3/servlets
+File -> new Java Project-> снимаем галочку Use default location и указываем пусть до папки masters/db/sqlinjection
 
 ## Запуск проекта:
 
@@ -13,6 +15,6 @@ File -> new Java Project-> снимаем галочку Use default location и
 Перейдите на вкладку Tasks и запустите задачу tomcatRunWar
 
 **Консоль**
-C помощью команды cd перейдите в директорию проекта masters/term3/servlets и выполните команду gradle tomcatRunWar
+C помощью команды cd перейдите в директорию проекта masters/db/sqlinjection и выполните команду gradle tomcatRunWar
 
 Чтобы остановить tomcat, есть команда gradle tomcatStop
