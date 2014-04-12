@@ -25,6 +25,9 @@
 
     <p th:text="${cv.text}"></p>
     <a class="btn btn-primary btn-lg" role="button">Отправить приглашение</a>
+    <a class="btn btn-primary btn-lg" th:href="${'/cv/edit/'+cv.id}">Редактировать</a>
+
+
 
 </div>
 </body>

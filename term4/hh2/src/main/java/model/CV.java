@@ -12,14 +12,14 @@ public class CV {
     @GenericGenerator(name="increment", strategy = "increment")
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "cv_category", joinColumns = {
             @JoinColumn(name = "cv_id", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "category_id",
                     nullable = false, updatable = false) })
     private List<Category> categories;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User owner;
 
@@ -95,4 +95,5 @@ public class CV {
                 ", text='" + text + '\'' +
                 '}';
     }
+
 }

@@ -1,10 +1,14 @@
 package controller;
 
+import controller.editor.CategoryEditor;
 import model.CV;
+import model.Category;
+import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import service.SearchService;
@@ -20,6 +24,12 @@ public class CVController {
     public CVController(UserService userService, SearchService searchService) {
         this.userService = userService;
         this.searchService = searchService;
+    }
+
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Category.class, new CategoryEditor());
     }
 
     @RequestMapping("/cv/{id}")
@@ -59,6 +69,13 @@ public class CVController {
         mv.addObject("cv", new CV());
         mv.addObject("allCategories", searchService.getAllCategories());
         return mv;
+    }
+
+    @RequestMapping("/cv/save")
+    public String saveCV(CV cv) {
+        cv.setOwner(new User(1L));
+        userService.saveCV(cv);
+        return "redirect:/cv/list";
     }
 
 }

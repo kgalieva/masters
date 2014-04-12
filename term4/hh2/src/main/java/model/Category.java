@@ -20,6 +20,13 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private Set<Vacancy> vacancies;
 
+    public Category() {
+    }
+
+    public Category(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

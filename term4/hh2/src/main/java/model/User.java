@@ -32,6 +32,13 @@ public class User {
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<CV> cvList;
 
+    public User() {
+    }
+
+    public User(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
