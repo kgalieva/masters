@@ -12,7 +12,7 @@
             $("#invite").click(function(){
                 $.ajax({
                     type: "GET",
-                    url: "/invite/[[${cv.owner.id}]]"
+                    url: "/invite/[[${cv.id}]]"
                 }).done(function( msg ) {
                     $("#invite_btn").html("<span style='color:blue'>Приглашение отправлено</span>");
                 });
