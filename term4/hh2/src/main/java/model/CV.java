@@ -31,6 +31,13 @@ public class CV {
 
     private String experience;
 
+    public CV() {
+    }
+
+    public CV(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

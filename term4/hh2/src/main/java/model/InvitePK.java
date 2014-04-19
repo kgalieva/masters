@@ -21,6 +21,11 @@ public class InvitePK implements Serializable {
         public InvitePK() {
         }
 
+        public InvitePK(Long vacancyId, Long cvId) {
+            this.vacancy = new Vacancy(vacancyId);
+            this.cv = new CV(cvId);
+        }
+
         public InvitePK(Vacancy vacancy, CV cv) {
             this.vacancy = vacancy;
             this.cv = cv;

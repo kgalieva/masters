@@ -17,6 +17,13 @@ public class Vacancy{
     private Integer experience;
     private String description;
 
+    public Vacancy() {
+    }
+
+    public Vacancy(Long id) {
+        this.id = id;
+    }
+
     @ManyToOne
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
