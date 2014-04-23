@@ -7,12 +7,14 @@ import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import service.SearchService;
 import service.UserService;
+import viewobject.CVVO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class CVController {
@@ -25,7 +27,6 @@ public class CVController {
         this.userService = userService;
         this.searchService = searchService;
     }
-
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -76,6 +77,17 @@ public class CVController {
         cv.setOwner(new User(1L));
         userService.saveCV(cv);
         return "redirect:/cv/list";
+    }
+
+    @RequestMapping("/cv/search")
+    public @ResponseBody
+    List<CVVO> getCVs(@RequestParam String term) {
+        Iterable<CV> cvs = userService.getCVsByNamePart(term);
+        List<CVVO> result = new ArrayList<CVVO>();
+        for (CV cv:cvs) {
+            result.add(new CVVO(cv.getId(), cv.getTitle()));
+        }
+        return result;
     }
 
 }

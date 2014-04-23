@@ -21,4 +21,6 @@ public interface CVRepository extends CrudRepository<CV, Long>, CVRepositoryCust
     @Query("select cv from CV cv join cv.categories c where c.id = ?1")
       //      SELECT * FROM cv, cv_category WHERE ... AND cv_category.category_id=?1
     Iterable<CV> findByCategory(Long categoryID);
+
+    List<CV> findByTitleStartingWithIgnoreCase(String title);
 }

@@ -15,6 +15,8 @@ public interface UserService {
 
     Iterable<CV> getAllCVs();
 
+    public Iterable<CV> getCVsByNamePart(String term);
+
     void saveCV(CV cv);
 
     Iterable<CV> getCVListByCategoryId(Long categoryID);

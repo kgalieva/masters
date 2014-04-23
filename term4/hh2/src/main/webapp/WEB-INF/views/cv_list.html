@@ -5,12 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>HH</title>
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="/resources/js/jquery-2.1.0.min.js"></script>
+    <script src="/resources/js/jquery-ui-1.10.4.custom.js"></script>
+    <link href="/resources/css/jquery-ui-1.10.4.custom.css" rel="stylesheet"/>
+    <script type="text/javascript">
+        $(function(){
+          /*  $( "#cv_search" ).autocomplete({
+                source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
+            });*/
+            $( "#cv_search" ).autocomplete({
+                source: "/cv/search",
+                select: function( event, ui ) {
+                        console.log( ui.item ?
+                        "Selected: " + ui.item.value + " aka " + ui.item.id :
+                        "Nothing selected, input was " + this.value );
+            }
+            });
+        });
+    </script>
 </head>
 <body>
 
 <div class="container">
     <div th:include="layout :: header(user)"></div>
     <h3>Каталог резюме</h3>
+    <div>Поиск: <input type="text" id="cv_search"/></div>
     <div class="row">
         <div class="col-lg-12">
             <ul class="nav nav-pills hr">

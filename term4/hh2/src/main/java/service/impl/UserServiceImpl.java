@@ -46,6 +46,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Iterable<CV> getCVsByNamePart(String term) {
+        return cvRepository.findByTitleStartingWithIgnoreCase(term);
+    }
+
+    @Override
     public void saveCV(CV cv) {
         cvRepository.save(cv);
     }
