@@ -53,5 +53,7 @@ public class UserRestController {
         userRepository.delete(id);
     }
 
+    //TODO 3. Добавить метод поиска всех пользователей
+
 
 }
