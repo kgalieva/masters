@@ -5,6 +5,7 @@
 <body>
 <div th:fragment="header(page)">
     <div class="page-header">
+        <!--TODO Проверка того, что пользователь авторизован-->
         <form th:action="@{/logout}" method="post" class="logout">
             <input type="submit" value="Выйти" class="btn btn-primary btn-sm"/>
         </form>

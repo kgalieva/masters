@@ -14,8 +14,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().
                 antMatchers("/user/**", "/cv/**").authenticated().
-                antMatchers("/cv/edit/**", "/cv/save").hasAnyRole("USER").
-                antMatchers("/login", "/logout").permitAll();
+                antMatchers("/cv/edit/**", "/cv/save").hasAnyRole("USER");
 
         http
             .formLogin()
@@ -28,6 +27,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        //TODO переопределить AuthProvider
+        //TODO двойная авторизация: пользователь или компания
         auth
             .inMemoryAuthentication()
                 .withUser("katerina.galieva@gmail.com").password("password").roles("USER");
