@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>HH</title>
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/resources/css/signin.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+
+    <form class="form-signin" th:action="@{/login}" method="post">
+        <h2 class="form-signin-heading">Авторизация</h2>
+        <div th:if="${param.error}">
+            Неверное имя пользователя или пароль
+        </div>
+        <div th:if="${param.logout}">
+            Вы успешно вышли из системы
+        </div>
+        <input type="email" name="username" class="form-control" placeholder="Email" />
+        <input type="password" name="password" class="form-control" placeholder="Пароль"/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+    </form>
+</div>
+</body>
+</html>

@@ -5,6 +5,9 @@
 <body>
 <div th:fragment="header(page)">
     <div class="page-header">
+        <form th:action="@{/logout}" method="post" class="logout">
+            <input type="submit" value="Выйти" class="btn btn-primary btn-sm"/>
+        </form>
         <h1>Head Hunter <small>ITIS edition</small></h1>
     </div>
     <ul class="nav nav-pills">

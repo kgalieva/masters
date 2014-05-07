@@ -31,4 +31,18 @@ public class InviteController {
         invite.setType(InviteType.INVITE);
         inviteRepository.save(invite);
     }
+
+    @RequestMapping("/response/{id}")
+    public void response(@PathVariable Long id) {
+        /*TODO реализуйте сохранение приглашения.
+            Для простоты все приглашения высылаются на вакансию с id = 1
+            Если есть желание, можно реализовать диалоговое окно выбора вакансии
+            и передавать в контроллер оба id.
+         */
+        Invite invite = new Invite();
+        InvitePK pk = new InvitePK(id, 1L);
+        invite.setKey(pk);
+        invite.setType(InviteType.RESPONSE);
+        inviteRepository.save(invite);
+    }
 }

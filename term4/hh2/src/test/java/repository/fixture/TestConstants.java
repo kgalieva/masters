@@ -1,5 +1,6 @@
 package repository.fixture;
 
+import model.Gender;
 import model.InviteType;
 
 public interface TestConstants {
@@ -11,6 +12,8 @@ public interface TestConstants {
     }
     interface UserConstants {
         String USER_NAME = "Александра";
+        String USER_CITY = "Казань";
+        Gender USER_GENDER = Gender.FEMALE;
     }
     interface VacancyConstants {
         String VACANCY_TITLE = "Аналитик отдела продаж";

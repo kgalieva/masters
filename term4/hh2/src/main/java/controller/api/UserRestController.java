@@ -41,7 +41,9 @@ public class UserRestController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
     public UserVO update(@PathVariable Long id, @RequestBody User user){
+        user.setId(id);
         return new DozerBeanMapper().map(userRepository.save(user), UserVO.class);
     }
 

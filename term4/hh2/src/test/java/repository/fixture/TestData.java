@@ -32,9 +32,9 @@ public class TestData {
 
     public static User standardUser() {
         User user = new User();
-        user.setGender(Gender.FEMALE);
+        user.setGender(USER_GENDER);
         user.setName(USER_NAME);
-        user.setCity("Казань");
+        user.setCity(USER_CITY);
         user.setEmail("alex@gmail.com");
         user.setPassword("qwe");
         user.setSalt("rty");
