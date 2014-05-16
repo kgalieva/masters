@@ -1,0 +1,34 @@
+use cert;
+db.question.insert({"_id":"1", "text": "What notifyAll() method do?",
+                     "answers": [{"id": "1", "text": "Wakes up all threads that are waiting on this object's monitor", "correct":"true"},
+                     {"id": "2", "text": "Wakes up one threads that are waiting on this object's monitor"},
+                     {"id": "3", "text": "Wakes up all threads that are not waiting on this object's monitor"},
+                     {"id": "4", "text": "None of the above"}]}
+);
+
+db.question.insert({"_id":"2", "text": "Which abstract class is the super class of all classes used for reading bytes?",
+                     "answers": [{"id": "1", "text": "Reader"},
+                     {"id": "2", "text": "FileReader"},
+                     {"id": "3", "text": "ByteReader"},
+                     {"id": "4", "text": "InputStream", "correct":"true"},
+                     {"id": "5", "text": "FileInputStream"}]}
+);
+
+db.question.insert({"_id":"3", "text": "Which abstract class is the super class of all classes used for writing characters?",
+                     "answers": [{"id": "1", "text": "Writer", "correct":"true"},
+                     {"id": "2", "text": "FileWriter"},
+                     {"id": "3", "text": "CharWriter"},
+                     {"id": "4", "text": "OutputStream"},
+                     {"id": "5", "text": "FileOutputStream"}]}
+);
+
+db.question.insert({"_id":"4", "text": "Given the following two classes (Address and Account), what may happen if you attempt to serialize an instance of Account? class Address{} class Account implements Serializable {Address address;}",
+ "answers": [{"id": "1", "text": "Compilation error"},
+                     {"id": "2", "text": "Exception is thrown at run time"},
+                     {"id": "3", "text": "Serialization will succeed correctly with no problems", "correct":"true"}]});
+
+db.question.insert({"_id":"5", "text": "An object is subject to garbage collection in java",
+ "answers": [        {"id": "1", "text": "when the program is at a point of execution that is out the scope of the object"},
+                     {"id": "2", "text": "when the object is set to null"},
+                     {"id": "3", "text": "when the object becomes unreachable", "correct":"true"}]}
+);

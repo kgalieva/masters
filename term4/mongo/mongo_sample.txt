@@ -1,0 +1,3 @@
+use sample;
+db.user.insert({"_id":"1", "city":"Казань", "email":"alex@gmail.com", "name":"Александр Семенов", "password":"alex","phone":"2121212", "salt":"alex"});
+

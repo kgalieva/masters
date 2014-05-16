@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>HH</title>
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <h3 th:text="${user.name}"></h3>
+    <dl class="dl-horizontal">
+        <dt>Город</dt>
+        <dd th:text="${user.city}">Казань</dd>
+        <dt>Email</dt>
+        <dd th:text="${user.email}">mail@gmail.com</dd>
+        <dt>Телефон</dt>
+        <dd th:text="${user.phone}">123456</dd>
+    </dl>
+</div>
+</body>
+</html>
